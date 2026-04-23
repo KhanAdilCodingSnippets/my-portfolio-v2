@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,70 +9,99 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     
     <style>
-        body {
-            background-color: #0f172a; 
-            color: #f8fafc;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            margin: 0;
-        }
-
-        .noise-bg {
-            position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.03;
-            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Vibrant Hover Effect for Project List */
+        .project-row { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .project-row:hover .project-title { transform: translateX(20px); color: #fff; text-shadow: 0 0 20px rgba(6, 182, 212, 0.5); }
+        .project-row:hover .project-arrow { opacity: 1; transform: translateX(0); color: #22d3ee; }
+        .project-title { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .project-arrow { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
     </style>
 </head>
-<body>
+<body class="bg-[#09090b] text-zinc-50 font-['Inter'] overflow-x-hidden antialiased selection:bg-cyan-500/30">
 
-    <div class="noise-bg"></div>
+    <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.04]" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg'); mix-blend-mode: overlay;"></div>
     
-    <div id="canvas-container" class="fixed top-0 left-0 w-full h-[100vh] z-0 pointer-events-none"></div>
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-screen z-0 pointer-events-none"></div>
 
-    <nav class="fixed top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-50 pointer-events-none">
-        <div class="text-xs font-bold tracking-[0.3em] pointer-events-auto uppercase text-white">Adil Firoz Khan</div>
+    <nav class="fixed top-0 left-0 w-full p-6 md:px-12 md:py-8 flex justify-between items-center z-50 pointer-events-none transition-all duration-300">
+        <div class="text-xs font-bold tracking-[0.3em] pointer-events-auto uppercase text-white hover:text-cyan-400 transition-colors cursor-pointer">Adil Firoz Khan</div>
         <div class="hidden md:flex gap-8 pointer-events-auto font-medium">
-            <a href="#" class="text-xs tracking-widest text-slate-400 hover:text-white uppercase transition-colors">Projects</a>
-            <a href="#" class="text-xs tracking-widest text-slate-400 hover:text-white uppercase transition-colors">Archives</a>
+            <a href="#projects" class="text-xs tracking-widest text-zinc-400 hover:text-cyan-400 uppercase transition-colors">Projects</a>
+            <a href="#contact" class="text-xs tracking-widest text-zinc-400 hover:text-fuchsia-400 uppercase transition-colors">Connect</a>
         </div>
     </nav>
 
-    <div class="content relative z-10 w-full">
+    <main class="relative z-10 w-full">
         
-        <section class="h-[100vh] w-full pointer-events-none flex flex-col justify-center items-center px-[5%] text-center">
-            <div class="max-w-3xl pointer-events-auto -mt-40">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
+        <section class="h-[300vh] w-full pointer-events-none relative" id="hero">
+            <div class="absolute top-[30vh] left-0 w-full text-center px-[5%] pointer-events-auto">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-500 drop-shadow-2xl">
                     Hi, I'm Adil.
                 </h1>
-                <p class="text-slate-400 text-lg md:text-xl font-light leading-relaxed mx-auto max-w-2xl">
-                    Final year software development student, author, and poet. Scroll down to enter the system.
+                <p class="text-zinc-300 text-lg md:text-xl font-light leading-relaxed mx-auto max-w-2xl bg-zinc-900/40 backdrop-blur-xl py-3 px-8 rounded-full border border-zinc-700/50 shadow-[0_0_30px_rgba(192,38,211,0.15)] inline-block">
+                    Software Developer <span class="mx-3 text-fuchsia-500/50">|</span> Author <span class="mx-3 text-cyan-500/50">|</span> Poet
                 </p>
             </div>
         </section>
 
-        <section class="h-[800vh] w-full pointer-events-none"></section>
+        <section id="projects" class="py-32 bg-zinc-950/80 backdrop-blur-2xl relative z-20 pointer-events-auto border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-[5%]">
+                <p class="text-sm font-bold text-cyan-400 tracking-[0.2em] uppercase mb-12 flex items-center gap-4">
+                    <span class="w-12 h-[1px] bg-cyan-400"></span> Selected Work
+                </p>
+                
+                <div class="flex flex-col">
+                    <a href="#" class="project-row block py-12 md:py-16 group relative overflow-hidden">
+                        <div class="flex items-center justify-between relative z-10">
+                            <h2 class="project-title text-4xl md:text-6xl lg:text-7xl font-bold text-zinc-500 tracking-tight">Tapless Lounge</h2>
+                            <div class="project-arrow opacity-0 -translate-x-8 text-4xl text-white">↗</div>
+                        </div>
+                        <p class="text-cyan-200/60 mt-4 max-w-md project-title">A seamless digital ordering experience redefining hospitality tech.</p>
+                    </a>
 
-        <section class="py-32 px-[5%] w-full flex items-center justify-center relative z-20">
-            <div class="max-w-2xl w-[90%] mx-auto pointer-events-auto bg-slate-900 border border-slate-700 rounded-[2rem] p-12 text-center shadow-2xl">
-                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-white">Let's Connect.</h2>
-                <p class="text-slate-400 mb-10">Feel free to reach out to me below.</p>
-                <div class="flex justify-center gap-4 flex-wrap">
-                    <a href="#" class="bg-white text-black px-8 py-3 rounded-full font-bold text-sm tracking-widest hover:scale-105 transition-transform">LINKEDIN</a>
-                    <a href="#" class="bg-transparent border border-slate-600 text-white px-8 py-3 rounded-full font-bold text-sm tracking-widest hover:bg-slate-800 transition-colors">INSTAGRAM</a>
+                    <a href="#" class="project-row block py-12 md:py-16 group relative overflow-hidden">
+                        <div class="flex items-center justify-between relative z-10">
+                            <h2 class="project-title text-4xl md:text-6xl lg:text-7xl font-bold text-zinc-500 tracking-tight">Adhikar</h2>
+                            <div class="project-arrow opacity-0 -translate-x-8 text-4xl text-white">↗</div>
+                        </div>
+                        <p class="text-fuchsia-200/60 mt-4 max-w-md project-title">Empowering citizens through accessible legal tech solutions.</p>
+                    </a>
+
+                    <a href="#" class="project-row block py-12 md:py-16 group relative overflow-hidden">
+                        <div class="flex items-center justify-between relative z-10">
+                            <h2 class="project-title text-4xl md:text-6xl lg:text-7xl font-bold text-zinc-500 tracking-tight">Prism AI</h2>
+                            <div class="project-arrow opacity-0 -translate-x-8 text-4xl text-white">↗</div>
+                        </div>
+                        <p class="text-violet-200/60 mt-4 max-w-md project-title">Advanced artificial intelligence integrated seamlessly into daily workflows.</p>
+                    </a>
                 </div>
             </div>
         </section>
 
-    </div>
+        <section id="contact" class="min-h-screen py-32 px-[5%] w-full flex items-center justify-center relative z-20 bg-zinc-950">
+            <div class="max-w-2xl w-[90%] mx-auto pointer-events-auto bg-zinc-900/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-12 md:p-16 text-center shadow-[0_0_50px_rgba(6,182,212,0.05)] relative overflow-hidden">
+                <div class="absolute -top-20 -left-20 w-40 h-40 bg-cyan-500/20 rounded-full blur-[50px]"></div>
+                <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-fuchsia-500/20 rounded-full blur-[50px]"></div>
+                
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">Let's Build.</h2>
+                <p class="text-zinc-400 mb-10 text-lg">Initialize a connection protocol.</p>
+                <div class="flex justify-center gap-6 flex-wrap relative z-10">
+                    <a href="#" class="bg-white text-zinc-950 px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-300">LINKEDIN</a>
+                    <a href="#" class="bg-transparent border border-white/20 text-white px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-white/10 transition-all duration-300">INSTAGRAM</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <script src="main.js"></script>
-
 </body>
 </html>
